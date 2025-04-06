@@ -140,6 +140,7 @@ class categoryClass:
             messagebox.showerror("Error", f"Error due to: {str(ex)}", parent=self.root)
         finally:
             con.close()
+            
            
         
 if __name__ == "__main__":

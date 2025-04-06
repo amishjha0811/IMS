@@ -15,12 +15,12 @@ class productClass:
         self.var_searchby = StringVar()
         self.var_searchtxt = StringVar()
         
+        self.var_pid=StringVar()
+        self.var_category=StringVar()
+        self.var_sup=StringVar()
         self.category_list=[]
         self.sup_list=[]
         self.fetch_category_sup()
-        
-        self.var_category=StringVar()
-        self.var_sup=StringVar()
         self.var_name=StringVar()
         self.var_price=StringVar()
         self.var_qty=StringVar()
@@ -151,8 +151,7 @@ class productClass:
                 
         except Exception as ex:
             messagebox.showerror("Error", f"Error due to: {str(ex)}", parent=self.root)
-                
-               
+                            
     def add(self):
         con = sqlite3.connect(database=r'ims.db')
         cur = con.cursor()
@@ -198,51 +197,40 @@ class productClass:
         f=self.product_table.focus()
         content=(self.product_table.item(f))
         row=content['values'] 
-        
-        
-        self.var_emp_id.set(row[0])
-        self.var_name.set(row[1])
-        self.var_email.set(row[2])
-        self.var_gender.set(row[3])
-        self.var_contact.set(row[4])
-        self.var_dob.set(row[5])
-        self.var_doj.set(row[6])
-        self.var_pass.set(row[7])
-        self.var_utype.set(row[8])
-        self.txt_address.delete('1.0', END),
-        self.txt_address.insert( END,row[9])
-        self.var_salary.set(row[10])
+        self.var_pid.set(row[0])
+        self.var_category.set(row[2])
+        self.var_sup.set(row[1])
+        self.var_name.set(row[3])
+        self.var_price.set(row[4])
+        self.var_qty.set(row[5])
+        self.var_status.set(row[6])
 
     
     def update(self):
         con = sqlite3.connect(database=r'ims.db')
         cur = con.cursor()
         try:
-            if self.var_emp_id.get() == "":  # Check for missing Empid
-                messagebox.showerror("Error", "Employee ID Must be required", parent=self.root)
+            if self.var_pid.get() == "":  # Check for missing Empid
+                messagebox.showerror("Error", "Please select product from list", parent=self.root)
             else:
-                cur.execute("SELECT * FROM employee WHERE Empid=?", (self.var_emp_id.get(),))
+                cur.execute("SELECT * FROM product WHERE pid=?", (self.var_pid.get(),))
                 row = cur.fetchone()
                 if row==None:
-                    messagebox.showerror("Error", "Invalid Employee ID",parent=self.root)
+                    messagebox.showerror("Error", "Invalid product",parent=self.root)
                 else:
                     # Inserting new employee record
-                    cur.execute("Update employee set Name=?, Email=?, Gender=?, Contact=?, DOB=?, DOJ=?, Pass=?, Utype=?, Address=?, Salary=? where Empid=?", (
+                    cur.execute("Update product set Category=?, Supplier=?, Name=?, Price=?, Quantity=?, Status=? where pid=?", (
 
+                        self.var_category.get(),
+                        self.var_sup.get(),
                         self.var_name.get(),
-                        self.var_email.get(),
-                        self.var_gender.get(),
-                        self.var_contact.get(),
-                        self.var_dob.get(),
-                        self.var_doj.get(),
-                        self.var_pass.get(),
-                        self.var_utype.get(),
-                        self.txt_address.get('1.0', END),
-                        self.var_salary.get(),
-                        self.var_emp_id.get(),
+                        self.var_price.get(),
+                        self.var_qty.get(),
+                        self.var_status.get(),
+                        self.var_pid.get(),
 ))
                     con.commit()
-                    messagebox.showinfo("Success", "Employee Updated successfully", parent=self.root)
+                    messagebox.showinfo("Success", "product Updated successfully", parent=self.root)
                     self.show()
                     
         except Exception as ex:
@@ -253,42 +241,36 @@ class productClass:
         con = sqlite3.connect(database=r'ims.db')
         cur = con.cursor()
         try:
-            if self.var_emp_id.get() == "":  # Check for missing Empid
-                messagebox.showerror("Error", "Employee ID Must be required", parent=self.root)
+            if self.var_pid.get() == "":  # Check for missing Empid
+                messagebox.showerror("Error", "Select product from the List", parent=self.root)
             else:
-                cur.execute("SELECT * FROM employee WHERE Empid=?", (self.var_emp_id.get(),))
+                cur.execute("SELECT * FROM product WHERE pid=?", (self.var_pid.get(),))
                 row = cur.fetchone()
                 if row==None:
-                    messagebox.showerror("Error", "Invalid Employee ID, try different", parent=self.root)
+                    messagebox.showerror("Error", "Invalid product, try different", parent=self.root)
                 else:
                     op=messagebox.askyesno("Confirm","Do you really want to delete?",parent=self.root)
                     if op==True:
-                      cur.execute("delete from employee where Empid=?",(self.var_emp_id.get(),))
+                      cur.execute("delete from product where pid=?",(self.var_pid.get(),))
                       con.commit()
-                      messagebox.showinfo("delete","Employee Deleted successfully",parent=self.root)
+                      messagebox.showinfo("delete","product Deleted successfully",parent=self.root)
                       self.clear()
 
         except Exception as ex:
             messagebox.showerror("Error", f"Error due to: {str(ex)}", parent=self.root)
             
     def clear(self):    
-        self.var_emp_id.set("")
+        self.var_category.set("Select")
+        self.var_sup.set("Select")
         self.var_name.set("")
-        self.var_email.set("")
-        self.var_gender.set("select")
-        self.var_contact.set("")
-        self.var_dob.set("")
-        self.var_doj.set("")
-        self.var_pass.set("")
-        self.var_utype.set("Admin")
-        self.txt_address.delete('1.0', END),
-        self.var_salary.set("")
+        self.var_price.set("")
+        self.var_qty.set("")
+        self.var_status.set("Active")
+        self.var_pid.set("")
         self.var_searchtxt.set("")
         self.var_searchby.set("Select")
         self.show()
-        
-        
-        
+           
     def search(self):
         con = sqlite3.connect(database=r'ims.db')
         cur = con.cursor()
@@ -297,7 +279,7 @@ class productClass:
                 messagebox.showerror("Error","select search a search option or enter a search term",parent=self.root)
                 return
                 
-            query = f"SELECT * FROM employee WHERE {self.var_searchby.get()} LIKE ?"
+            query = f"SELECT * FROM product WHERE {self.var_searchby.get()} LIKE ?"
             cur.execute(query, ('%' + self.var_searchtxt.get() + '%',))
             rows = cur.fetchall()
             self.product_table.delete(*self.product_table.get_children())
