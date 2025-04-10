@@ -5,6 +5,8 @@ from employee import employeeClass
 from category import categoryClass
 from supplier import SupplierClass
 from product import productClass
+from sales import salesClass
+
 
 class IMS:
     def __init__(self, root):
@@ -62,7 +64,7 @@ class IMS:
         btn_product = Button(LeftMenu, text="Product", font=("times new roman", 20, "bold"), bg="skyblue", bd=3, cursor="hand2", command=self.open_product)
         btn_product.pack(side=TOP, fill=X) 
         
-        btn_sales = Button(LeftMenu, text="Sales", font=("times new roman", 20, "bold"), bg="skyblue", bd=3, cursor="hand2")
+        btn_sales = Button(LeftMenu, text="Sales", font=("times new roman", 20, "bold"), bg="skyblue", bd=3, cursor="hand2", command=self.open_sales)
         btn_sales.pack(side=TOP, fill=X) 
         
         btn_exit = Button(LeftMenu, text="Exit", font=("times new roman", 20, "bold"), bg="skyblue", bd=3, cursor="hand2")
@@ -105,6 +107,10 @@ class IMS:
     def open_product(self):
         self.new_win = Toplevel(self.root)
         self.new_obj = productClass(self.new_win)
+        
+    def open_sales(self):
+        self.new_win = Toplevel(self.root)
+        self.new_obj = salesClass(self.new_win)
     
     
     
