@@ -102,9 +102,34 @@ class BillClass:
         Cal_Cart_Frame.place(x=420,y=190,width=530,height=360)
         
         # for calculator
-        Cal_Frame=Frame(Cal_Cart_Frame,bd=2,relief=RIDGE,bg="white")
+        self.var_cal_input=StringVar()
+        Cal_Frame=Frame(Cal_Cart_Frame,bd=9,relief=RIDGE,bg="white")
         Cal_Frame.place(x=5,y=10,width=268,height=340)
-       
+
+        txt_cal_input=Entry(Cal_Frame,textvariable=self.var_cal_input,font=('arial',15,'bold'),width=21,bd=10,relief=GROOVE,state="readonly")
+        txt_cal_input.grid(row=0,columnspan=4)
+        
+        btn_7=Button(Cal_Frame,text='7',font=('araial',15,'bold'),bd=5,width=4,pady=12,cursor="hand2").grid(row=1,column=0)
+        btn_8=Button(Cal_Frame,text='8',font=('araial',15,'bold'),bd=5,width=4,pady=12,cursor="hand2").grid(row=1,column=1)
+        btn_9=Button(Cal_Frame,text='9',font=('araial',15,'bold'),bd=5,width=4,pady=12,cursor="hand2").grid(row=1,column=2)
+        btn_sum=Button(Cal_Frame,text='+',font=('araial',15,'bold'),bd=5,width=4,pady=12,cursor="hand2").grid(row=1,column=3)
+
+        btn_4=Button(Cal_Frame,text='4',font=('araial',15,'bold'),bd=5,width=4,pady=12,cursor="hand2").grid(row=2,column=0)
+        btn_5=Button(Cal_Frame,text='5',font=('araial',15,'bold'),bd=5,width=4,pady=12,cursor="hand2").grid(row=2,column=1)
+        btn_6=Button(Cal_Frame,text='6',font=('araial',15,'bold'),bd=5,width=4,pady=12,cursor="hand2").grid(row=2,column=2)
+        btn_sub=Button(Cal_Frame,text='-',font=('araial',15,'bold'),bd=5,width=4,pady=12,cursor="hand2").grid(row=2,column=3)
+        
+        btn_1=Button(Cal_Frame,text='1',font=('araial',15,'bold'),bd=5,width=4,pady=12,cursor="hand2").grid(row=3,column=0)
+        btn_2=Button(Cal_Frame,text='2',font=('araial',15,'bold'),bd=5,width=4,pady=12,cursor="hand2").grid(row=3,column=1)
+        btn_3=Button(Cal_Frame,text='3',font=('araial',15,'bold'),bd=5,width=4,pady=12,cursor="hand2").grid(row=3,column=2)
+        btn_mul=Button(Cal_Frame,text='*',font=('araial',15,'bold'),bd=5,width=4,pady=12,cursor="hand2").grid(row=3,column=3)
+
+        btn_c=Button(Cal_Frame,text='c',font=('araial',15,'bold'),bd=5,width=4,pady=10.5,cursor="hand2").grid(row=4,column=0)
+        btn_0=Button(Cal_Frame,text='0',font=('araial',15,'bold'),bd=5,width=4,pady=10.5,cursor="hand2").grid(row=4,column=1)
+        btn_eq=Button(Cal_Frame,text='=',font=('araial',15,'bold'),bd=5,width=4,pady=10.5,cursor="hand2").grid(row=4,column=2)
+        btn_div=Button(Cal_Frame,text='/',font=('araial',15,'bold'),bd=5,width=4,pady=10.5,cursor="hand2").grid(row=4,column=3)
+
+                
         # Cart frame 
         cart_Frame = Frame(Cal_Cart_Frame,bd=3,relief=RIDGE)
         cart_Frame.place(x=280,y=8,width=245,height=342)
