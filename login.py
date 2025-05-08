@@ -11,7 +11,7 @@ class Login:
     def __init__(self,root):
         self.root=root 
         self.root.title("Login System | Developed by AJ & CJ")
-        self.root.geometry("1350x700+0+0")
+        self.root.geometry("1520x770+0+10")
         self.root.config(bg="#fafafa")
         self.otp=''
     #imagessss
@@ -144,7 +144,7 @@ class Login:
             self.btn_reset.config(state=DISABLED)
         else:
             messagebox.showerror("Error!","Invalid OTP!",parent=self.forget_pass)
-    
+
     def update(self):
         if self.var_new_pass.get()=="" or self.var_conf_pass.get()=="":
             messagebox.showerror("Error!","Password is required.",parent=self.forget_pass)
@@ -167,6 +167,6 @@ obj=Login(root)
 root.mainloop()
 
 #get this function added once the billing dash is ready        
-    #def logout(self):
+    # def logout(self):
     #    self.root.destroy()
     #    os.system("python login.py")

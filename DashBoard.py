@@ -6,6 +6,11 @@ from category import categoryClass
 from supplier import SupplierClass
 from product import productClass
 from sales import salesClass
+import os
+import sqlite3
+from tkinter import messagebox
+import time
+from time import strftime
 
 
 class IMS:
@@ -26,7 +31,7 @@ class IMS:
         title.place(x=0, y=0, relwidth=1, height=70)
         
         #===button_logout===
-        btn_logout = Button(self.root, text="Logout", font=("times new roman", 15, "bold"), bg="red", cursor="hand2", width=10, height=1)
+        btn_logout = Button(self.root, text="Logout",command=self.logout, font=("times new roman", 15, "bold"), bg="red", cursor="hand2", width=10, height=1)
         btn_logout.place(x=1350, y=15)
         
         #===clock==== (you can update the clock every second)
@@ -90,6 +95,8 @@ class IMS:
         lbl_footer = Label(self.root, text="IMS-Inventory Management System | Developed By Aj & Cj\nFor any Technical Issue Contact: 8368xxxx12",
                            font=("times new roman", 12), bg="#20263e", fg="white")
         lbl_footer.pack(side=BOTTOM, fill=X)
+        
+        self.update_content()  # Update the content
     
     
     def open_employee(self):
@@ -111,16 +118,44 @@ class IMS:
     def open_sales(self):
         self.new_win = Toplevel(self.root)
         self.new_obj = salesClass(self.new_win)
-    
-    
-    
+        
     def update_clock(self):
-        from time import strftime
         time_string = strftime('%H:%M:%S')
         date_string = strftime('%d-%m-%Y')
         
         self.lbl_clock.config(text=f"Welcome to Inventory Management System\t\t Date: {date_string}\t\t Time: {time_string}")
         self.lbl_clock.after(1000, self.update_clock) 
+        
+    def update_content(self):
+        con=sqlite3.connect("ims.db")
+        cur=con.cursor()
+        try:
+            cur.execute("select * from product")
+            product=cur.fetchall()
+            self.lbl_product.config(text=f"Total Product\n [{str(len(product))}]")
+
+            cur.execute("select * from employee")
+            employee = cur.fetchall()
+            self.lbl_employee.config(text=f"Total Employee\n [{str(len(employee))}]")
+            
+            cur.execute("select * from supplier")
+            supplier = cur.fetchall()
+            self.lbl_supplier.config(text=f"Total Supplier\n [{str(len(supplier))}]")
+            
+            cur.execute("select * from category")
+            category = cur.fetchall()
+            self.lbl_category.config(text=f"Total Category\n [{str(len(category))}]")
+            
+            bill=len(os.listdir('bill'))
+            self.lbl_sales.config(text=f'Total Sales[{str(bill)}]')
+            self.lbl_clock.after(200, self.update_content) 
+            
+        except Exception as ex:
+            messagebox.showerror("Error", f"Error due to {str(ex)}", parent=self.root)
+    
+    def logout(self):
+       self.root.destroy()
+       os.system("python login.py")
 
 if __name__ == "__main__":
     root = Tk()

@@ -47,15 +47,14 @@ class salesClass:
         
         #=======Bill Area==========
         bill_Frame=Frame(self.root, bd=3,relief=RIDGE)
-        bill_Frame.place(x=300, y=180, width=500, height=420)
+        bill_Frame.place(x=300, y=180, width=460, height=400)
         
         lbl_title2 = Label(bill_Frame, text="Customer Bill Area", font=("goudy old style", 20), 
         bg="#FCBE6A")
         lbl_title2.pack(side=TOP, fill=X)
         
         scrolly2=Scrollbar(bill_Frame, orient=VERTICAL)
-        self.bill_area=Text(bill_Frame, font=("goudy old style",18), 
-        bg="lightyellow", yscrollcommand=scrolly2.set)
+        self.bill_area=Text(bill_Frame,bg="lightyellow", yscrollcommand=scrolly2.set)
         scrolly2.pack(side=RIGHT,fill=Y)
         scrolly2.config(command=self.bill_area.yview)
         self.bill_area.pack(fill=BOTH, expand=1)
