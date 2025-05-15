@@ -1,4 +1,3 @@
-import email
 from tkinter import*
 from PIL import ImageTk 
 from tkinter import messagebox
@@ -45,7 +44,7 @@ class Login:
         self.lbl_change_image=Label(self.root,bg="white")
         self.lbl_change_image.place(x=367,y=153,width=240,height=428)
         self.ani()
-        
+                
     def ani(self):
         self.im=self.im1
         self.im1=self.im2
@@ -70,7 +69,7 @@ class Login:
                         os.system("python DashBoard.py")
                     else:
                         self.root.destroy()
-                        os.system("python category.py")
+                        os.system("python billing.py")
                         
         except Exception as ex:
             messagebox.showerror("Error!",f"Error due to: {str(ex)}",parent=self.root)
@@ -92,7 +91,7 @@ class Login:
                     self.var_conf_pass=StringVar()
                     #call send email function
                     chk=self.email_send(Email[0])
-                    if chk!="s":
+                    if chk=='f':
                         messagebox.showerror("Error","Connection Lost,Try Again",parent=self.root)
                     else:
                         
@@ -114,7 +113,7 @@ class Login:
                         conf_pass=Label(self.forget_pass,text='Confirm Password',font=('times new roman',15)).place(x=24,y=215)
                         txt_conf_pass=Entry(self.forget_pass,textvariable=self.var_conf_pass,font=("times new roman",15),bg="lightyellow").place(x=24,y=255,width=250,height=30)
 
-                        self.btn_new_pass=Button(self.forget_pass,text="UPDATE",command=self.update(),state=DISABLED,font=("times new roman",15),bg="lightblue")
+                        self.btn_new_pass=Button(self.forget_pass,text="UPDATE",command=self.update,state=DISABLED,font=("times new roman",15),bg="lightblue")
                         self.btn_new_pass.place(x=150,y=300,width=100,height=30)
                     
         except Exception as ex:
@@ -134,9 +133,9 @@ class Login:
         sm.sendmail(email_,to_,msg)
         chk=sm.ehlo()
         if chk[0]==250:
-            return "sucess"
+            return "s"
         else:
-            return "failed"
+            return "f"
         
     def validate(self):
         if int(self.otp)==int(self.var_otp.get()):
@@ -148,7 +147,7 @@ class Login:
     def update(self):
         if self.var_new_pass.get()=="" or self.var_conf_pass.get()=="":
             messagebox.showerror("Error!","Password is required.",parent=self.forget_pass)
-        elif self.var_new_pass.get()!="" or self.var_conf_pass.get():
+        elif self.var_new_pass.get()!= self.var_conf_pass.get():
             messagebox.showerror("Error!","The New & Confirm password should be same.",parent=self.forget_pass)
         else:
             con=sqlite3.connect(database='ims.db')

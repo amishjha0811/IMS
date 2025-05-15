@@ -42,7 +42,7 @@ class IMS:
         
         #====left menu====
         self.MenuLogo = Image.open("image/logo2.jpg")
-        self.MenuLogo = self.MenuLogo.resize((200, 200), Image.LANCZOS)
+        self.MenuLogo = self.MenuLogo.resize((205, 260), Image.LANCZOS)
         self.MenuLogo = ImageTk.PhotoImage(self.MenuLogo)
         
         LeftMenu = Frame(self.root, bd=2, relief=RIDGE, bg="white")
@@ -72,7 +72,7 @@ class IMS:
         btn_sales = Button(LeftMenu, text="Sales", font=("times new roman", 20, "bold"), bg="skyblue", bd=3, cursor="hand2", command=self.open_sales)
         btn_sales.pack(side=TOP, fill=X) 
         
-        btn_exit = Button(LeftMenu, text="Exit", font=("times new roman", 20, "bold"), bg="skyblue", bd=3, cursor="hand2")
+        btn_exit = Button(LeftMenu, text="Exit", font=("times new roman", 20, "bold"), bg="skyblue", bd=3, cursor="hand2", command=self.exit)
         btn_exit.pack(side=TOP, fill=X)
         
         #====content==
@@ -156,6 +156,13 @@ class IMS:
     def logout(self):
        self.root.destroy()
        os.system("python login.py")
+       
+    def exit(self):
+        exit = messagebox.askyesno("Confirm", "Do you really want to exit?", parent=self.root)
+        if exit > 0:
+            self.root.destroy()
+        else:
+            return
 
 if __name__ == "__main__":
     root = Tk()
